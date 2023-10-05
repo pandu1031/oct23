@@ -8,7 +8,7 @@
      stages{
         stage("Clone code"){
             steps {
-            println "here im cloning code from git hub"
+            println "here im cloning the code from git hub"
             git branch: '$BRANCH_NAME',
                       url: 'https://github.com/pandu1031/boxfuse-sample-java-war-hello.git'
         }
