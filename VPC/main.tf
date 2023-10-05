@@ -63,8 +63,8 @@ resource "aws_security_group" "example" {
 
   # Inbound rule allowing HTTP access from anywhere
   ingress {
-    from_port   = 80
-    to_port     = 80
+    from_port   = 8080
+    to_port     = 8080
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"] # This allows HTTP access from any IP address (be cautious in a production environment)
   }
@@ -221,6 +221,27 @@ resource "aws_route_table_association" "public-1a" {
 resource "aws_route_table_association" "public-1b" {
   subnet_id      = aws_subnet.public1b.id
   route_table_id = aws_route_table.public.id
+}
+resource "aws_lb" "example_lb" {
+  name               = "example-lb"
+  internal           = false         # Set to true if using an internal load balancer
+  load_balancer_type = "application" # Use "network" for Network Load Balancer
+
+  enable_deletion_protection = false # Set to true to prevent deletion
+
+  subnets = [aws_subnet.private1a.id,aws_subnet.private1b.id]
+}
+resource "aws_lb_target_group" "example_target_group" {
+  name     = "example-target-group"
+  port     = 80
+  protocol = "HTTP"
+   vpc_id = aws_vpc.example.id
+}
+
+resource "aws_lb_target_group_attachment" "example_attachment" {
+  target_group_arn = aws_lb_target_group.example_target_group.arn
+  target_id        = aws_instance.example-3.id
+  port             = 80
 }
 # Output the VPC ID
 output "vpc_id" {

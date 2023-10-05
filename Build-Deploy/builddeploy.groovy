@@ -13,7 +13,7 @@
                       url: 'https://github.com/pandu1031/boxfuse-sample-java-war-hello.git'
         }
         }
-        stage("Build Step"){
+        stage("Build step"){
             steps {
             println "Here im building code "
             sh "mvn clean package"
