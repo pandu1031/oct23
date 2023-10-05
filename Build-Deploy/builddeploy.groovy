@@ -26,7 +26,7 @@
                 sh """
                 aws s3 ls
                 aws s3 ls s3://mammuu
-                aws s3 cp target/hello-${BUILD_NUMBER}.war s3://mammuu/Pandu/${BRANCH_NAME}/${BUILD_NUMBER}
+                aws s3 cp target/hello-${BUILD_NUMBER}.war s3://mammuu/Sweeto/${BRANCH_NAME}/${BUILD_NUMBER}
             """
             }
            }
