@@ -1,0 +1,65 @@
+---
+- name: Install Git, Maven, Apache HTTP Server, Java 11, Jenkins, and Tomcat on CentOS
+  hosts: jenkins
+  become: yes  # Run tasks with sudo privileges
+
+  tasks:
+    - name: Update package cache
+      yum:
+        name: "*"
+        state: latest
+
+    - name: Install Git
+      yum:
+        name: git
+        state: present
+
+    - name: Install Maven
+      yum:
+        name: maven
+        state: present
+
+    - name: Install Java 11
+      yum:
+        name: java-11-openjdk
+        state: present
+
+    ---
+- name: Install Jenkins on CentOS
+  hosts: your_target_server
+  become: yes
+  tasks:
+    - name: Install Java
+      yum:
+        name: java-11-openjdk
+        state: present
+
+---
+- name: Install Jenkins on CentOS
+  hosts: your_target_server
+  become: yes
+  tasks:
+    - name: Install Java
+      yum:
+        name: java-11-openjdk
+        state: present
+
+    - name: Add Jenkins Repository
+      yum_repository:
+        name: jenkins
+        description: Jenkins Repository
+        baseurl: https://pkg.jenkins.io/redhat-stable/
+        gpgkey: https://pkg.jenkins.io/redhat/jenkins.io.key
+        enabled: yes
+
+    - name: Install Jenkins
+      yum:
+        name: jenkins
+        state: present
+
+    - name: Start Jenkins Service
+      systemd:
+        name: jenkins
+        state: started
+        enabled: yes
+        

@@ -1,0 +1,12 @@
+---
+- name: Install Apache Tomcat
+  hosts: tomcat
+  become: yes  # Run tasks with sudo privileges
+  tasks: 
+    - name: copying files to remote server
+      copy: 
+        src: /tmp/tomcat.sh
+        dest: /tmp/
+    - name: Run Bash command
+      command: 
+         bash /tmp/tomcat.sh 

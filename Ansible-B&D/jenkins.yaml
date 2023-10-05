@@ -1,0 +1,13 @@
+---
+- name: Install Git, Maven, Java 11, Jenkin
+  hosts: jenkins
+  become: yes
+  tasks: 
+    - name: copying files to remote server
+      copy: 
+        src: /tmp/jenkins.sh
+        dest: /tmp/
+    - name: Run Bash command
+      command: 
+         bash /tmp/jenkins.sh   
+

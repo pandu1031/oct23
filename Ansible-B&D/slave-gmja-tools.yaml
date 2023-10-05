@@ -1,0 +1,12 @@
+---
+- name: Install Development Tools
+  hosts: slave
+  become: yes
+  tasks:
+    - name: Copy a file from local to remote
+      copy:
+        src: /tmp/slave.sh   # Replace with the path to your local file
+        dest: /tmp/
+    - name: Run Bash command
+      command: |
+        bash /tmp/slave.sh 
