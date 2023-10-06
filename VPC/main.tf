@@ -68,6 +68,12 @@ resource "aws_security_group" "example" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"] # This allows HTTP access from any IP address (be cautious in a production environment)
   }
+   ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] # This allows HTTP access from any IP address (be cautious in a production environment)
+  }
 
   # You can add more ingress rules as needed
   
