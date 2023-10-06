@@ -3,7 +3,7 @@ provider "aws" {
   region = "us-east-1" # Change this to your desired AWS region
 }
 # Create an Bastion EC2 instance in the VPC and subnet
-resource "aws_instance" "example" {
+resource "aws_instance" "example-0" {
   ami             = "ami-00c6177f250e07ec1" # Replace with your desired AMI ID
   instance_type   = "t2.micro"              # Replace with your desired instance type
   subnet_id       = aws_subnet.public1a.id
@@ -70,7 +70,7 @@ resource "aws_security_group" "example" {
   }
 
   # You can add more ingress rules as needed
-  # ...
+  
 
   # Outbound rule allowing all outbound traffic
   egress {
@@ -224,24 +224,54 @@ resource "aws_route_table_association" "public-1b" {
 }
 resource "aws_lb" "example_lb" {
   name               = "example-lb"
-  internal           = false         # Set to true if using an internal load balancer
-  load_balancer_type = "application" # Use "network" for Network Load Balancer
-
-  enable_deletion_protection = false # Set to true to prevent deletion
-
-  subnets = [aws_subnet.private1a.id,aws_subnet.private1b.id]
+  internal           = false
+  load_balancer_type = "application"
+  subnets            = [aws_subnet.private1a.id, aws_subnet.private1b.id] # Replace with your subnet IDs
+  security_groups    = [aws_security_group.example.id]
 }
 resource "aws_lb_target_group" "example_target_group" {
   name     = "example-target-group"
   port     = 80
   protocol = "HTTP"
-   vpc_id = aws_vpc.example.id
+  vpc_id   = aws_vpc.example.id
 }
 
 resource "aws_lb_target_group_attachment" "example_attachment" {
   target_group_arn = aws_lb_target_group.example_target_group.arn
   target_id        = aws_instance.example-3.id
   port             = 80
+}
+
+resource "aws_lb_listener" "example_listener" {
+  load_balancer_arn = aws_lb.example_lb.arn
+  port              = 80
+  protocol          = "HTTP"
+
+  default_action {
+    type = "fixed-response"
+    fixed_response {
+      content_type = "text/plain"
+      status_code  = "200"
+    }
+  }
+}
+resource "aws_lb_listener_rule" "example_rule" {
+  listener_arn = aws_lb_listener.example_listener.arn
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.example_target_group.arn
+  }
+  condition {
+    path_pattern {
+      values = ["/example"]
+    }
+  }
+}
+
+resource "aws_lb_target_group_attachment" "example_1_attachment" {
+  target_group_arn  = aws_lb_target_group.example_target_group.arn
+  target_id         = aws_instance.example-3.id  # Replace with your instance ID or other target
+  port              = 8080  # Make sure it matches the target group's port
 }
 # Output the VPC ID
 output "vpc_id" {

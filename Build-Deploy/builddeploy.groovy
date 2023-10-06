@@ -26,7 +26,7 @@
                 sh """
                 aws s3 ls
                 aws s3 ls s3://mammuu
-                aws s3 cp target/hello-${BUILD_NUMBER}.war s3://mammuu/Sweeto/${BRANCH_NAME}/${BUILD_NUMBER}
+                aws s3 cp target/hello-${BUILD_NUMBER}.war s3://mammuu/Chintu/${BRANCH_NAME}/${BUILD_NUMBER}
             """
             }
            }
@@ -35,7 +35,7 @@
                 println "Deploying artifacts from jenkins to tomcat server"
                 sh "whoami"
                 sh "hostname -i"
-                sh "scp -o StrictHostKeyChecking=no -i /tmp/devops23.pem /tmp/devops23.pem ec2-user@${SERVER_IP}:/tmp/"
+                // sh "scp -o StrictHostKeyChecking=no -i /tmp/devops23.pem /tmp/devops23.pem ec2-user@${SERVER_IP}:/tmp/"
                 sh "scp -o StrictHostKeyChecking=no -i /tmp/devops23.pem target/hello-${BUILD_NUMBER}.war ec2-user@${SERVER_IP}:/var/lib/tomcat/webapps/"
             }
         }
