@@ -232,7 +232,7 @@ resource "aws_lb" "example_lb" {
   name               = "example-lb"
   internal           = false
   load_balancer_type = "application"
-  subnets            = [aws_subnet.private1a.id, aws_subnet.private1b.id] # Replace with your subnet IDs
+  subnets            = [aws_subnet.public1a.id, aws_subnet.public1b.id] # Replace with your subnet IDs
   security_groups    = [aws_security_group.example.id]
 }
 resource "aws_lb_target_group" "example_target_group" {
