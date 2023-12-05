@@ -55,11 +55,11 @@
     - name: Install Jenkins
       yum:
         name: jenkins
-        state: present
+        state: absent
 
     - name: Start Jenkins Service
       systemd:
         name: jenkins
-        state: started
+        state: stop
         enabled: yes
         
