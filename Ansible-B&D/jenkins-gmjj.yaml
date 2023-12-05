@@ -12,12 +12,12 @@
     - name: Install Git
       yum:
         name: git
-        state: present
+        state: absent
 
     - name: Install Maven
       yum:
         name: maven
-        state: present
+        state: absent
 
     - name: Install Java 11
       yum:
@@ -42,7 +42,7 @@
     - name: Install Java
       yum:
         name: java-11-openjdk
-        state: present
+        state: absent
 
     - name: Add Jenkins Repository
       yum_repository:
