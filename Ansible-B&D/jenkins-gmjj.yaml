@@ -2,7 +2,7 @@
 - name: Install Git, Maven, Apache HTTP Server, Java 11, Jenkins, and Tomcat on CentOS
   hosts: jenkins
   become: yes  # Run tasks with sudo privileges
-
+ # given some tasks
   tasks:
     - name: Update package cache
       yum:
