@@ -35,7 +35,7 @@
                 println "Deploying artifacts from jenkins to tomcat server"
                 sh "whoami"
                 sh "hostname -i"
-                // sh "scp -o StrictHostKeyChecking=no -i /tmp/devops23.pem /tmp/devops23.pem ec2-user@${SERVER_IP}:/tmp/"
+                sh "scp -o StrictHostKeyChecking=no -i /tmp/devops23.pem /tmp/devops23.pem ec2-user@${SERVER_IP}:/tmp/"
                 sh "scp -o StrictHostKeyChecking=no -i /tmp/devops23.pem target/hello-${BUILD_NUMBER}.war ec2-user@${SERVER_IP}:/var/lib/tomcat/webapps/"
             }
         }
